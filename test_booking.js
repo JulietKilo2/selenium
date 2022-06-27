@@ -33,11 +33,11 @@ const run = async () => {
     await driver.get(localHost + "/deals");
     logger("success");
     // 5. click on deal item
-    logger("Click on deals item");
+    logger("click on deals item");
     await driver.wait(until.elementLocated(By.css("#dealsItem-0"))).click();
     logger("success");
     // 6. click on refund policy
-    logger("Click on refundsPolicy");
+    logger("click on refundsPolicy");
     await driver
       .wait(until.elementLocated(By.css("#dealsDetail-refundpolicy-0")))
       .click();
@@ -48,16 +48,16 @@ const run = async () => {
       .wait(until.elementLocated(By.name("password")))
       .sendKeys(pw, Key.ENTER);
     // 8. click on refund policy again (after logging in)
-    logger("Click on refundsPolicy (2nd time)");
+    logger("click on refundsPolicy (2nd time)");
     await driver
       .wait(until.elementLocated(By.css("#dealsDetail-refundpolicy-0")))
       .click();
     // 9. pick a date and continue
-    logger("Click on date input");
+    logger("click on date input");
     await driver
       .wait(until.elementLocated(By.css("#date")))
       .sendKeys(Date(), Key.ENTER);
-    logger("Click on continue button");
+    logger("click on continue button");
     await driver
       .wait(until.elementLocated(By.css("#booking-continue-btn")))
       .click();
