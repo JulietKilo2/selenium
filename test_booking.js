@@ -64,12 +64,25 @@ const run = async () => {
   // sign-in page
   // 7. email & pw
   try {
+    logger("Logging in");
     await driver.wait(until.elementLocated(By.name("email"))).sendKeys(email);
     await driver
       .wait(until.elementLocated(By.name("password")))
       .sendKeys(pw, Key.ENTER);
   } catch (error) {
-    // logger(`error: ${error}`);
+    logger(`error: ${error}`);
+    // await driver.quit();
+    // process.exit(0);
+  }
+
+  // 8. click on refund policy again (after logging in)
+  try {
+    logger("Click on refundsPolicy");
+    await driver
+      .wait(until.elementLocated(By.css("#dealsDetail-refundpolicy-0")))
+      .click();
+  } catch (error) {
+    logger(`error: ${error}`);
     // await driver.quit();
     // process.exit(0);
   }
@@ -84,10 +97,10 @@ const run = async () => {
     // file written successfully
   });
 
-  await setTimeout(async () => {
-    await driver.quit();
-    process.exit(0);
-  }, 2000);
+  // await setTimeout(async () => {
+  //   await driver.quit();
+  //   process.exit(0);
+  // }, 2000);
 };
 
 run();
