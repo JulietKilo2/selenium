@@ -63,6 +63,8 @@ const run = async () => {
 
   // sign-in page
   // 7. email & pw
+
+  // 7.1 manual login
   try {
     logger("Logging in");
     await driver.wait(until.elementLocated(By.name("email"))).sendKeys(email);
@@ -71,13 +73,32 @@ const run = async () => {
       .sendKeys(pw, Key.ENTER);
   } catch (error) {
     logger(`error: ${error}`);
-    // await driver.quit();
-    // process.exit(0);
+    await driver.quit();
+    process.exit(0);
   }
+
+  // 7.2 google login
+  //! google does not let automated tools to access the log in modal/page.
+  //! find a workaround.
+  // try {
+  //   logger("logging in via google");
+  //   await driver.wait(until.elementLocated(By.id("signin-apple"))).click();
+  // const google = await driver.wait(
+  //   until.elementLocated(By.css("#signin-google"))
+  // );
+
+  // await driver
+  //   .findElement({ id: "google" })
+  //   .then((element) => element.click())
+  //   .catch((err) => console.log("nope", err));
+  // } catch (error) {
+  //   logger(`error: ${error}`);
+  //   console.log({ error });
+  // }
 
   // 8. click on refund policy again (after logging in)
   try {
-    logger("Click on refundsPolicy");
+    logger("Click on refundsPolicy (2nd time)");
     await driver
       .wait(until.elementLocated(By.css("#dealsDetail-refundpolicy-0")))
       .click();
@@ -87,8 +108,33 @@ const run = async () => {
     // process.exit(0);
   }
 
+  // booking page, make a reservation.
+  // 9. pick a date and continue
+  try {
+    logger("Click on date input");
+    await driver
+      .wait(until.elementLocated(By.css("#date")))
+      .sendKeys(Date(), Key.ENTER);
+    logger("Click on continue button");
+    await driver
+      .wait(until.elementLocated(By.css("#booking-continue-btn")))
+      .click();
+  } catch (error) {
+    logger(`error: ${error}`);
+  }
+
+  // 10. fill out / change other inputs and submit
+  try {
+    logger("submit the form");
+    await driver
+      .wait(until.elementLocated(By.css("#booking-userInfo-continue-btn")))
+      .click();
+    logger("booking test complete");
+  } catch (error) {
+    logger(`error: ${error}`);
+  }
+
   // finishing up
-  // testLog += "\ntest complete";
   fs.writeFile("test_logs.txt", testLog, (err) => {
     console.log(testLog);
     if (err) {
